@@ -13,7 +13,7 @@ struct HeaderView: View {
     
     @State private var valueSelected: String = ""
     
-    private let options: [String] = ["React Native", "Flutter", "SwiftUI", "Kotlin"]
+    private let options: [String] = ["React Native", "Flutter", "SwiftUI", "JetPack Compose"]
     
     var body: some View {
         HStack {

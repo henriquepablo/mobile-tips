@@ -12,9 +12,13 @@ struct ContentView: View {
         VStack {
             HeaderView()
             
-            ScrollView {
-                
+            ScrollView(showsIndicators: false) {
+                CardView()
+                CardView()
+                CardView()
+                CardView()
             }
+            .padding(.top, 10)
         }
         .padding()
         .background(Color(.init(white: 0, alpha: 0.05)))
