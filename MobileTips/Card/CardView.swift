@@ -8,15 +8,24 @@
 import SwiftUI
 
 struct CardView: View {
+    
+    let post: ArticleModel
+    
     var body: some View {
         VStack{
             HStack {
-                Image(systemName: "person.fill")
-                    .font(.system(size: 16))
-                    .padding(10)
-                    .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.gray, lineWidth: 2))
+               AsyncImage(url: URL(string: post.user.profile_image)) { image in
+                    image.resizable()
+                        .scaledToFill()
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                } placeholder: {
+                    ProgressView()  
+                        .progressViewStyle(CircularProgressViewStyle())
+                }
                 
-                Text("Name")
+                Text(post.user.name)
                 
                 Spacer()
             }
@@ -25,19 +34,21 @@ struct CardView: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Title")
+                    Text(post.title)
                         .padding(.bottom, 5)
-                        .font(.title2)
+                        .font(.system(size: 22))
                         .bold()
                     
-                    Text("Tags")
-                        .font(.subheadline)
-                        .padding(3)
-                        .border(Color.gray, width: 1)
-                        .cornerRadius(2)
-                        .background(Color.gray)
-                        .foregroundStyle(Color.white)
-                        
+                    HStack {
+                        ForEach(post.tag_list, id: \.self) { tag in
+                            Text(tag)
+                                .font(.system(size: 12))
+                                .padding(5)
+                                .border(Color.gray, width: 1)
+                                .background(Color.gray)
+                                .foregroundStyle(Color.white)
+                        }
+                    }
                 }
                 
                 Spacer()
@@ -47,11 +58,12 @@ struct CardView: View {
             
         }
         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 0.5))
+        .padding(10)
         
         
     }
 }
 
 #Preview {
-    CardView()
+    CardView(post: ArticleModel.init(id: 1, title: "Test" ,tag_list: ["React", "Native"], user: User.init(profile_image: "teste", name: "teste"), url: "teste"))
 }
